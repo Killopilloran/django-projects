@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, reverse
 from datetime import datetime
 import os
+from django.shortcuts import render
 
 def home_view(request):
     template_name = 'app/home.html'
@@ -21,10 +22,24 @@ def home_view(request):
     return render(request, template_name, context)
 
 
+def hello(request):
+    context = {
+        'test': 5,
+        'data': [1, 6, 7],
+        'val': 'hello'
+    }
+    return render(request, 'app/home.html', context)
+
+
+def sum_view(request, op1, op2):
+    result = op1 + op2
+    return HttpResponse(f'Sum = {result}')
+
+
 def time_view(request):
     # обратите внимание – здесь HTML шаблона нет, 
     # возвращается просто текст
-    current_time = datetime.now().strftime('%H:%M:%S')
+    current_time = datetime.now().strftime('%H: %M:%S')
     msg = f'Текущее время: {current_time}'
     return HttpResponse(msg)
 
